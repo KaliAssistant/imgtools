@@ -1,4 +1,4 @@
-name: gcc
+name: build
 
 on:
   push:
@@ -14,7 +14,7 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Install dependencies
-      run: sudo apt install libheif-dev gcc g++ #./scripts/install-ci-linux.sh
+      run: ./scripts/install-ci-linux.sh
     - name: make clean
       run: make clean
     - name: make
