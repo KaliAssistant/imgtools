@@ -16,7 +16,7 @@ jobs:
     - name: Set execute permissions
       run: chmod +x ./scripts/install-ci-linux.sh
     - name: Install dependencies
-      run: ./scripts/install-ci-linux.sh
+      run: bash ./scripts/install-ci-linux.sh
     - name: make clean
       run: make clean
     - name: make
