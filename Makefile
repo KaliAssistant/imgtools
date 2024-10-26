@@ -1,7 +1,6 @@
 CC = gcc
 CFLAGS = -Wall -O2 -Iinclude  -v
-CPPFLAGS +=
-LDFLAGS += -lheif -lm
+LDFLAGS = -lheif -lm
 BUILD_DIR = build
 BIN_DIR = bin
 
@@ -27,15 +26,15 @@ $(BIN_DIR):
 	mkdir -p $(BIN_DIR)
 
 $(BUILD_DIR)/%.o: src/%.c
-	$(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $(LDFLAGS) -c $< -o $@
 
 $(TARGET1): $(OBJ1)
-	$(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) -o $@ $(OBJ1)
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $(OBJ1)
 
 $(TARGET2): $(OBJ2)
-	$(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) -o $@ $(OBJ2)
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $(OBJ2)
 
 $(TARGET3): $(OBJ3)
-	$(CC) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS) -o $@ $(OBJ3)
+	$(CC) $(CFLAGS) $(LDFLAGS) -o $@ $(OBJ3)
 clean:
 	rm -rf $(BUILD_DIR) $(BIN_DIR) $(TARGET1) $(TARGET2) $(TARGET3)
