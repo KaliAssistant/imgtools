@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Wall -O2 -Iinclude  -v
 CPPFLAGS +=
-LDFLAGS += -lheif
+LDFLAGS += -lheif -lm
 BUILD_DIR = build
 BIN_DIR = bin
 

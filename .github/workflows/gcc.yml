@@ -13,10 +13,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: Set execute permissions
-      run: chmod +x ./scripts/install-ci-linux.sh
     - name: Install dependencies
-      run: bash ./scripts/install-ci-linux.sh
+      run: ./scripts/install-ci-linux.sh
     - name: make clean
       run: make clean
     - name: make
