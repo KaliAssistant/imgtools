@@ -26,6 +26,7 @@ DEBUG3 = $(DEBUG_DIR)/heic2img
 all: $(BUILD_DIR) $(BIN_DIR) $(TARGET1) $(TARGET2) $(TARGET3)
 
 debug: $(BUILD_DIR) $(DEBUG_DIR) $(DEBUG1) $(DEBUG2) $(DEBUG3)
+
 debug_img2img: $(BUILD_DIR) $(DEBUG_DIR) $(DEBUG1)
 debug_img2lcd: $(BUILD_DIR) $(DEBUG_DIR) $(DEBUG2)
 debug_heic2img: $(BUILD_DIR) $(DEBUG_DIR) $(DEBUG3)
@@ -51,13 +52,13 @@ $(TARGET2): $(OBJ2)
 $(TARGET3): $(OBJ3)
 	$(CC)  -o $@ $(OBJ3) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS)
 
-$(DEBUG1): $(OBJ1)
+$(DEBUG1): $(DEBUG_DIR) $(OBJ1)
 	$(CC)  -o $@ $(OBJ1) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS)
 
-$(DEBUG2): $(OBJ2)
+$(DEBUG2): $(DEBUG_DIR) $(OBJ2)
 	$(CC)  -o $@ $(OBJ2) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS)
 
-$(DEBUG3): $(OBJ3)
+$(DEBUG3): $(DEBUG_DIR) $(OBJ3)
 	$(CC)  -o $@ $(OBJ3) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS)
 
 clean:
