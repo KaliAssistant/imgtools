@@ -27,9 +27,9 @@ all: $(BUILD_DIR) $(BIN_DIR) $(TARGET1) $(TARGET2) $(TARGET3)
 
 debug: $(BUILD_DIR) $(DEBUG_DIR) $(DEBUG1) $(DEBUG2) $(DEBUG3)
 
-debug_img2img: $(BUILD_DIR) $(DEBUG_DIR) $(DEBUG1)
-debug_img2lcd: $(BUILD_DIR) $(DEBUG_DIR) $(DEBUG2)
-debug_heic2img: $(BUILD_DIR) $(DEBUG_DIR) $(DEBUG3)
+debug_img2img: $(DEBUG_DIR) $(DEBUG1)
+debug_img2lcd: $(DEBUG_DIR) $(DEBUG2)
+debug_heic2img: $(DEBUG_DIR) $(DEBUG3)
 
 $(BUILD_DIR):
 	mkdir -p $(BUILD_DIR)
