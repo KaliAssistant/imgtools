@@ -1,6 +1,6 @@
 # imgtools
 
-[![Build Status](https://github.com/KaliAssistant/imgtools/actions/workflows/build.yml/badge.svg)](https://github.com/KaliAssistant/imgtools/actions)
+[![Build Status](https://github.com/KaliAssistant/imgtools/actions/workflows/build.yml/badge.svg)](https://github.com/KaliAssistant/imgtools/actions)  [![Build Status](https://github.com/KaliAssistant/imgtools/actions/workflows/test.yml/badge.svg)](https://github.com/KaliAssistant/imgtools/actions)
 
 Noteworthy:
 
