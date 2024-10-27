@@ -7,8 +7,8 @@ BUILD_ROOT=$ROOT/..
 make clean
 make
 
-mkdir ./test/data
-cd ./test/data
+mkdir ./tests/data
+cd ./tests/data
 wget https://github.com/KaliAssistant/imgtools/releases/download/1.0.0/data.7z
 7z x data.7z
 
