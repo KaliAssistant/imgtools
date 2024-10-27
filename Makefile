@@ -25,7 +25,7 @@ DEBUG3 = $(DEBUG_DIR)/heic2img
 
 all: $(BUILD_DIR) $(BIN_DIR) $(TARGET1) $(TARGET2) $(TARGET3)
 
-debug: $(BUILD_DIR) $(DEBUG_DIR) $(DEBUG1) $(DEBUG2) $(DEBUG3)
+debug: $(BUILD_DIR) $(_DEBUG_DIR) $(DEBUG1) $(DEBUG2) $(DEBUG3)
 
 $(BUILD_DIR):
 	mkdir -p $(BUILD_DIR)
@@ -33,7 +33,7 @@ $(BUILD_DIR):
 $(BIN_DIR):
 	mkdir -p $(BIN_DIR)
 
-$(DEBUG_DIR):
+$(_DEBUG_DIR):
 	mkdir -p $(DEBUG_DIR)
 
 $(BUILD_DIR)/%.o: src/%.c
@@ -48,13 +48,13 @@ $(TARGET2): $(OBJ2)
 $(TARGET3): $(OBJ3)
 	$(CC)  -o $@ $(OBJ3) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS)
 
-$(DEBUG1): $(DEBUG_DIR) $(OBJ1)
+$(DEBUG1): $(_DEBUG_DIR) $(OBJ1)
 	$(CC)  -o $@ $(OBJ1) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS)
 
-$(DEBUG2): $(DEBUG_DIR) $(OBJ2)
+$(DEBUG2): $(_DEBUG_DIR) $(OBJ2)
 	$(CC)  -o $@ $(OBJ2) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS)
 
-$(DEBUG3): $(DEBUG_DIR) $(OBJ3)
+$(DEBUG3): $(_DEBUG_DIR) $(OBJ3)
 	$(CC)  -o $@ $(OBJ3) $(CFLAGS) $(CPPFLAGS) $(LDFLAGS)
 
 clean:
