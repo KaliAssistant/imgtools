@@ -9,7 +9,7 @@ make
 
 mkdir ./tests/data
 mkdir ./tests/tests
-mkdir ./teste/outpot
+mkdir ./tests/output
 
 cd ./tests/data
 wget https://github.com/KaliAssistant/imgtools/releases/download/1.0.0/data.7z
