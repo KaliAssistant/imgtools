@@ -16,4 +16,4 @@ jobs:
       - name: Install dependencies
         run: ./scripts/install-ci-linux.sh
       - name: build
-        run: ./scripts/test-linux.sh
+        run: ./scripts/tests-linux.sh
