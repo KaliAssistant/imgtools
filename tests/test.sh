@@ -1,7 +1,7 @@
 #!/bin/bash
 
 
-debug_dir=$(pwd)/../debug
+debug_dir=$(pwd)/../bin
 data_dir=$(pwd)/data
 output_dir=$(pwd)/output
 

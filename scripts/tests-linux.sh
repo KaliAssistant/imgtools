@@ -5,7 +5,7 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 BUILD_ROOT=$ROOT/..
 
 make clean
-make debug
+make
 
 mkdir ./test/data
 cd ./test/data
