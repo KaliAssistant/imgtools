@@ -12,9 +12,34 @@
 #include <errno.h>
 #include "stb_image_write.h"
 #include <libheif/heif.h>
+#include <stdbool.h>
 
 
+// Define the background color (RGB)
+#define BACKGROUND_R 255
+#define BACKGROUND_G 255
+#define BACKGROUND_B 255
 
+
+unsigned char* RGBA2RGB(int width, int height, const unsigned char*data) {
+    unsigned char *rgb_data = malloc(width * height *3);
+    //rgb_data = malloc(width * height *3);
+    for (int y = 0; y < height; ++y) {
+        for (int x = 0; x < width; ++x) {
+            int src_index = (y * width + x) * 4;
+            int dest_index = (y * width + x) * 3;
+            unsigned char r = data[src_index];
+            unsigned char g = data[src_index + 1];
+            unsigned char b = data[src_index + 2];
+            unsigned char a = data[src_index + 3];
+
+            rgb_data[dest_index] = (r * a + BACKGROUND_R * (255 - a)) / 255;
+            rgb_data[dest_index + 1] = (g * a + BACKGROUND_G * (255 - a)) / 255;
+            rgb_data[dest_index + 2] = (b * a + BACKGROUND_B * (255 - a)) / 255;
+        }
+    }
+    return rgb_data;
+}
 
 int string_to_int(const char *str) {
     char *endptr;
@@ -86,9 +111,16 @@ int main(int argc, char* argv[]) {
         exit(EXIT_FAILURE);
     }
 
+    bool isAlphaCh = heif_image_handle_has_alpha_channel(handle);
+
     struct heif_image *img;
     // Decode with RGBA if alpha is present
-    err = heif_decode_image(handle, &img, heif_colorspace_RGB, heif_chroma_interleaved_RGB, NULL);
+    if (isAlphaCh) {
+        err = heif_decode_image(handle, &img, heif_colorspace_RGB, heif_chroma_interleaved_RGBA, NULL);
+    } else {
+        err = heif_decode_image(handle, &img, heif_colorspace_RGB, heif_chroma_interleaved_RGB, NULL);
+    }
+
     /*
     if (err.code != heif_error_Ok) {
         // Try decoding with RGB if RGBA is not supported or alpha is absent
@@ -105,12 +137,14 @@ int main(int argc, char* argv[]) {
     int height = heif_image_get_height(img, heif_channel_interleaved);
     int stride;
     const uint8_t *data = heif_image_get_plane_readonly(img, heif_channel_interleaved, &stride);
-    if (stride != width * 3) {
-        printf("Warning: stride (%d) does not match width * 3 (%d).\n", stride, width * 3);
+    int _count_channel = (isAlphaCh) ? 4 : 3;
+    int pkd_stride = (isAlphaCh) ? width * 4 : width * 3;
+    if (stride != pkd_stride) {
+        printf("Warning: stride (%d) does not match width * 3 (%d).\n", stride, pkd_stride);
     }
-    unsigned char* packed_data = malloc(width * height * 3);
+    unsigned char* packed_data = malloc(height* pkd_stride);
     for (int y = 0; y < height; y++) {
-        memcpy(packed_data + y * width * 3, data + y * stride, width * 3);
+        memcpy(packed_data + y * pkd_stride, data + y * stride, pkd_stride);
     }
 
     if (strcmp(outpot_format, "JPG") ==0) {
@@ -126,7 +160,9 @@ int main(int argc, char* argv[]) {
             fprintf(stderr, "Argument <jpeg quality> value out of range (0-100).\n");
             exit(EXIT_FAILURE);
         }
-        if (!stbi_write_jpg(output_file, width, height, 3, packed_data, _quality)){
+
+        unsigned char* _toJPG_data = (isAlphaCh) ? RGBA2RGB(width, height, packed_data) : packed_data;
+        if (!stbi_write_jpg(output_file, width, height, 3, _toJPG_data, _quality)){
 
             fprintf(stderr, "Cannot write jpeg file:%s\n", output_file);
             heif_image_release(img);
@@ -139,7 +175,7 @@ int main(int argc, char* argv[]) {
         heif_image_handle_release(handle);
         heif_context_free(ctx);
     } else if (strcmp(outpot_format, "PNG") ==0) {
-        if (!stbi_write_png(output_file, width, height, 3, packed_data, width * 3)) {
+        if (!stbi_write_png(output_file, width, height, _count_channel, packed_data,  pkd_stride)) {
             fprintf(stderr, "Cannot write png file:%s\n", output_file);
             heif_image_release(img);
             heif_image_handle_release(handle);
@@ -151,7 +187,8 @@ int main(int argc, char* argv[]) {
         heif_image_handle_release(handle);
         heif_context_free(ctx);
     } else if (strcmp(outpot_format, "TGA") ==0) {
-        if (!stbi_write_tga(output_file, width, height, 3, packed_data)) {
+        unsigned char* _toTGA_data = (isAlphaCh) ? RGBA2RGB(width, height, packed_data) : packed_data;
+        if (!stbi_write_tga(output_file, width, height, 3, _toTGA_data)) {
             fprintf(stderr, "Cannot write png file:%s\n", output_file);
             heif_image_release(img);
             heif_image_handle_release(handle);
@@ -163,7 +200,8 @@ int main(int argc, char* argv[]) {
         heif_image_handle_release(handle);
         heif_context_free(ctx);
     } else if (strcmp(outpot_format, "BMP") ==0) {
-        if (!stbi_write_bmp(output_file, width, height, 3, packed_data)) {
+        //unsigned char* _toBMP_data = (isAlphaCh) ? RGBA2RGB(width, height, packed_data) : packed_data;
+        if (!stbi_write_bmp(output_file, width, height, 4, packed_data)) {
             fprintf(stderr, "Cannot write png file:%s\n", output_file);
             heif_image_release(img);
             heif_image_handle_release(handle);

@@ -167,7 +167,8 @@ int main(int argc, char* argv[])
         printf("Conversion completed: %s\n", output_file);
         stbi_image_free(data);
     } else if (strcmp(outpot_format, "BMP") ==0) {
-        unsigned char *rgb_data;
+        unsigned char *rgba_data;
+        /*
         rgb_data = malloc(width * height *3);
         for (int y = 0; y < height; ++y) {
             for (int x = 0; x < width; ++x) {
@@ -183,7 +184,20 @@ int main(int argc, char* argv[])
                 rgb_data[dest_index + 2] = b * a / 255 + 255 * (255 - a) / 255;
             }
         }
-        if (!stbi_write_bmp(output_file, width, height, 3, rgb_data)) {
+         */
+        rgba_data = malloc(width * height *4);
+        for (int y = 0; y < height; ++y) {
+            for (int x = 0; x < width; ++x) {
+                int src_index = (y * width + x) * 4;
+                //int dest_index = (y * width + x) * 3;
+                rgba_data[src_index] = data[src_index];
+                rgba_data[src_index + 1] = data[src_index + 1];
+                rgba_data[src_index + 2] = data[src_index + 2];
+                rgba_data[src_index + 3] = data[src_index + 3];
+
+            }
+        }
+        if (!stbi_write_bmp(output_file, width, height, 4, rgba_data)) {
             fprintf(stderr, "Cannot write bmp file:%s\n", output_file);
             stbi_image_free(data);
             exit(EXIT_FAILURE);
