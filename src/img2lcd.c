@@ -85,7 +85,7 @@ int main(int argc, char* argv[]) {
     }
 
     if (strcmp(color_format, "XBM") ==0) {
-        if (strcmp(output_format, "XBM") ==0) {
+        if (strcmp(output_format, "xbm") ==0) {
             if (save_xbm_1bit_xbm(output_file, width, height, convert_xbm_1bit(width, height, a2bg, rgb_data)) == -1) {
                 fprintf(stderr, "Cannot write file:%s\n", output_file);
                 stbi_image_free(rgb_data);
@@ -183,7 +183,7 @@ unsigned char* convert_xbm_1bit(int width, int height, bool a2bg, const unsigned
 }
 
 unsigned short* convert_rgb565(int width, int height, bool a2bg, const unsigned char *rgba_data) {
-    unsigned short* rgb565_data = malloc(width * height);
+    unsigned short* rgb565_data = malloc(width * height *2);
    // unsigned char *raw_rgb_data = malloc(width * height * 3);
     int _px_count_ = 0;
     for (int y = 0; y < height; ++y) {

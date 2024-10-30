@@ -8,6 +8,10 @@ Noteworthy:
 * image to lcd, oled (img2lcd, xbm): [img2lcd.c](./src/img2lcd.c)
 * heic to image Converter: [heic2img.c](./src/heic2img.c)
 
+Library dependencies :
+* libheif `sudo apt install libheif`
+
+
 | file                           | input format       | color              | depth       |      output format |
 |:-------------------------------|--------------------|--------------------|-------------|-------------------:|
 | [img2img.c](./src/img2img.c)   | JPG, PNG, TGA, BMP | RGB888, RGBA8888   | 8bit        | JPG, PNG, TGA, BMP |

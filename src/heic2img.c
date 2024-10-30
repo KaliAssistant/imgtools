@@ -171,6 +171,7 @@ int main(int argc, char* argv[]) {
             exit(EXIT_FAILURE);
         }
         printf("Conversion completed: %s\n", output_file);
+        free(_toJPG_data);
         heif_image_release(img);
         heif_image_handle_release(handle);
         heif_context_free(ctx);
@@ -201,7 +202,7 @@ int main(int argc, char* argv[]) {
         heif_context_free(ctx);
     } else if (strcmp(outpot_format, "BMP") ==0) {
         //unsigned char* _toBMP_data = (isAlphaCh) ? RGBA2RGB(width, height, packed_data) : packed_data;
-        if (!stbi_write_bmp(output_file, width, height, 4, packed_data)) {
+        if (!stbi_write_bmp(output_file, width, height, _count_channel, packed_data)) {
             fprintf(stderr, "Cannot write png file:%s\n", output_file);
             heif_image_release(img);
             heif_image_handle_release(handle);
