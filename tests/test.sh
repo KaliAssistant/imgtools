@@ -6,10 +6,7 @@ bin_dir=$(pwd)/../bin
 data_dir=$(pwd)/data
 output_dir=$(pwd)/output
 test_sample_dir=$(pwd)/tests
-
 export PATH=$PATH:$bin_dir
-
-
 
 Test_img2img_output_array=(
 "img2img -i $data_dir/Sample-bmp-alpha-0.bmp -o  $output_dir/Test-bmp-alpha2bmp-output-0.bmp -f BMP&&diff <(xxd $output_dir/Test-bmp-alpha2bmp-output-0.bmp) <(xxd $test_sample_dir/Test-bmp-alpha2bmp-output-0.bmp)"
