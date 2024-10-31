@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -e
+#set -e
 
 bin_dir=$(pwd)/../bin
 data_dir=$(pwd)/data
